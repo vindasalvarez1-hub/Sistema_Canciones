@@ -17,4 +17,22 @@ import Modelos.*;
 public class GestorUsuarios {
     private static final String FILE_PATH = "usuarios.json";
     private static final Gson gson = new Gson();
+    
+    public static List<Usuario> cargarUsuarios() {
+        try (Reader reader = new FileReader(FILE_PATH)) {
+            return gson.fromJson(reader, new TypeToken<List<Usuario>>(){}.getType());
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public static void guardarUsuarios(List<Usuario> usuarios) {
+        try (Writer writer = new FileWriter(FILE_PATH)) {
+            gson.toJson(usuarios, writer);
+        } catch (IOException e) {
+            System.out.println("Error guardando usuarios: " + e.getMessage());
+        }
+    }
+
+
 }
