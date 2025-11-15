@@ -33,6 +33,23 @@ public class GestorUsuarios {
             System.out.println("Error guardando usuarios: " + e.getMessage());
         }
     }
+    public static Usuario login(String nombre, String password) {
+        List<Usuario> usuarios = cargarUsuarios();
+        for (Usuario u : usuarios) {
+            if (u.getNombre().equals(nombre) && u.getPassword().equals(password)) {
+                return u;
+            }
+        }
+        return null;
+    }
 
+    public static Usuario registrar(String nombre, String password) {
+        List<Usuario> usuarios = cargarUsuarios();
+        int nuevoId = usuarios.size() + 1;
+        Usuario nuevo = new Usuario(nuevoId, nombre, password);
+        usuarios.add(nuevo);
+        guardarUsuarios(usuarios);
+        return nuevo;
+    }
 
 }
